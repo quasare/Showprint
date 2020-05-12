@@ -8,4 +8,7 @@ BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 payload = {'part': 'snippet', 'q': 'pharrell', 'maxResults': 3, 'key': API_KEY}
 
-res = requests.get(f'{BASE_URL}', params=payload)
+res = requests.get(f'{BASE_URL}', params=payload).json()
+
+
+video url = f"https://www.youtube.com/watch?v={vid_id}"

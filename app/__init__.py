@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, flash, redirect, session, g, 
 from flask_debugtoolbar import DebugToolbarExtension
 from .models import db, connect_db
 from .shows.show_routes import shows
+from .users.users_routes import user
+from .anime.anime_routes import anime
 
 app = Flask(__name__)
 
@@ -22,6 +24,8 @@ with app.app_context():
     db.create_all()
 
 app.register_blueprint(shows, url_prefix='/shows')
+app.register_blueprint(user, url_prefix='/user')
+app.register_blueprint(anime, url_prefix='/anime')
 
 @app.route('/')
 def landing():
