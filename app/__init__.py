@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request, flash, redirect, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from .models import db, connect_db
+from .shows.show_routes import shows
 
 app = Flask(__name__)
 
@@ -16,9 +17,11 @@ toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
 
+
 with app.app_context():
     db.create_all()
 
+app.register_blueprint(shows, url_prefix='/shows')
 
 @app.route('/')
 def landing():

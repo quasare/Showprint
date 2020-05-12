@@ -6,4 +6,4 @@ shows = Blueprint('shows', __name__, template_folder='templates',
 
 @shows.route('/')
 def show_home():
-    return render_te
+    return render_template('show_home.html')
