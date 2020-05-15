@@ -16,10 +16,15 @@
     <nav class="navbar navbar-expand-lg navbar-bg">
         <div class="container">
             <div class="navbar-nav">
-                {{ nav_link('user.user_dashboard', 'Your Profile')}}
                 {{ nav_link('landing', 'Home') }}
+                {% if 'username' in session %}
+                {{ nav_link('user.user_dashboard', 'User Home')}}
                 {{ nav_link('shows.show_home', 'Tv Shows') }}
-                {{ nav_link('anime.show_home', 'Anime')}}
+                {{ nav_link('logout', 'Log Out') }}
+                {% elif 'username' not in session%}
+                {{ nav_link('login', 'Login') }}
+                {{ nav_link('register', 'Sign Up') }}
+                {% endif %}
             </div>
 
         </div>
@@ -27,7 +32,13 @@
 
     {% block content%} {% endblock%}
 
+    <div class="container">
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
 
+
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

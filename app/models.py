@@ -1,9 +1,14 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from wtforms_alchemy import ModelForm, model_form_factory
+from wtforms.validators import Email
+from wtforms import PasswordField
+from flask_bcrypt import Bcrypt
 
 
 db = SQLAlchemy()
+
+bcrypt = Bcrypt()
 
 
 class User(db.Model):
@@ -11,12 +16,43 @@ class User(db.Model):
     __tablename__='users'
 
     username = db.Column(db.String(15), primary_key=True)
-    first_name = db.Column(db.String(15), nullable=False)
-    last_name = db.Column(db.String(15), nullable=False)
-    password = db.Column(db.String, nullable=False)
-    email = db.Column(db.String, nullable=False, unique=True)
+    first_name = db.Column(db.String(15), nullable=False, info={'label': 'First Name'})
+    last_name = db.Column(db.String(15), nullable=False, info={'label': 'Last Name'})
+    password = db.Column(db.String, nullable=False, info={'form_field_class': PasswordField})
+    email = db.Column(db.String, nullable=False, unique=False, info={'validators': Email()})
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    
+    @classmethod
+    def register(cls, username, pwd):
+        """Register user w/hashed password & return user."""
+
+        hashed = bcrypt.generate_password_hash(pwd, 14)
+        # turn bytestring into normal (unicode utf8) string
+        hashed_utf8 = hashed.decode("utf8")
+
+        # return instance of user w/username and hashed pwd
+        return cls(username=username, password=hashed_utf8)
+    # end_register
+
+    # start_authenticate
+    @classmethod
+    def authenticate(cls, username, pwd):
+        """Validate that user exists & password is correct.
+
+        Return user if valid; else return False.
+        """
+
+        u = User.query.filter_by(username=username).first()
+
+        if u and bcrypt.check_password_hash(u.password, pwd):
+            # return user instance
+            return u
+        else:
+            return False
+    # end_authenticate
+
+
 
     def __repr__(self):
         u = self
@@ -31,10 +67,12 @@ class Show(db.Model):
     name = db.Column(db.String, nullable=False)
     rating = db.Column(db.Integer)
     summary = db.Column(db.String, nullable=False)
-    episodes = db.relationship('episodes', backref='shows')
-    seasons = db.relationship('season', backref='shows')
+    url = db.Column(db.String, nullable=False)
+    api_id = db.Column(db.Integer, nullable=False)
+    episodes = db.relationship('Episode', backref='shows')
+    seasons = db.relationship('Season', backref='shows')
 
-    def __repr__(sefl):
+    def __repr__(self):
         s = self
         return f'<Show={s.name}>'
 
@@ -44,8 +82,9 @@ class Season(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     season_num = db.Column(db.Integer, nullable=False)
+    api_id = db.Column(db.Integer, nullable=False)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
-    episodes = db.relationship('episodes', backref='seasons')
+    episodes = db.relationship('Episode', backref='seasons')
 
 class Episode(db.Model):
 
@@ -55,10 +94,11 @@ class Episode(db.Model):
     name = db.Column(db.String, nullable=False) 
     season_id = db.Column(db.Integer, db.ForeignKey('seasons.id'), nullable=False )
     summary = db.Column(db.String, nullable=False)
+    api_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
 
-    def __repr__(sefl):
+    def __repr__(self):
         e = self
         return f'<Ep={e.name}, season={e.season}, shows={e.show_id}>'     
 
@@ -96,6 +136,12 @@ class Youtube_vid(db.Model):
     url = db.Column(db.String, nullable=False)
     thumbnail = db.Column(db.String, nullable=False)
     liked = db.Column(db.Boolean)
+
+class Search(db.Model):
+    __tablename__='searches'
+
+    search_value = db.Column(db.String, primary_key=True)    
+    result = db.Column(db.ARRAY(db.String), nullable=False)
 
 def connect_db(app):
     

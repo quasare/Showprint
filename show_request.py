@@ -6,7 +6,8 @@ BASE_URL = 'http://api.tvmaze.com'
 def shows_search(show):
     payload = {'q': f'{show}'}
     r = requests.get(f'{BASE_URL}/search/shows', params=payload)
-    return r.json()
+    first_nine = r.json()[:9]
+    return first_nine
 
 def single_show_search(show):
     payload = {'q': f'{show}'}

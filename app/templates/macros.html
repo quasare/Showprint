@@ -1,31 +1,31 @@
 <!-- NavLink Macro -->
 {% macro nav_link(endpoint, text) %}
 {% if request.endpoint.endswith(endpoint) %}
-<a class="nav-item nav-link nav-color" href="{{ url_for(endpoint) }}">{{text}}</href=>
-    {% else %}
-    <a class="nav-item nav-link nav-color" href="{{ url_for(endpoint) }}">{{text}}</a>
-    {% endif %}
-    {% endmacro %}
+<a class="nav-item nav-link nav-color" href="{{ url_for(endpoint) }}">{{text}}</a>
+{% else %}
+<a class="nav-item nav-link nav-color" href="{{ url_for(endpoint) }}">{{text}}</a>
+{% endif %}
+{% endmacro %}
 
 
-    
+
 <!--Form Field Macro  -->
 {% macro temp_form(form) %}
-    <form method="POST">
-        <div class="form-group">
-            {{ form.hidden_tag() }}
+<form method="POST">
+    <div class="form-group">
+        {{ form.hidden_tag() }}
 
-            {% for field in form
+        {% for field in form
 if field.widget.input_type != 'hidden' %}
-            <p>
-                {{ field.label }}
-                {{ field(class_='form-control') }}
-                {% for error in field.errors %}
-                {{ error }}
-                {% endfor %}
-            </p>
+        <p>
+            {{ field.label }}
+            {{ field(class_='form-control') }}
+            {% for error in field.errors %}
+            {{ error }}
             {% endfor %}
-        </div>
-
-    </form>
-    {% endmacro %}
+        </p>
+        {% endfor %}
+    </div>
+    <button class="btn form-button" type="submit">Submit</button>
+</form>
+{% endmacro %}

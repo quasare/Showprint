@@ -17,3 +17,17 @@ body {
 .user-dash-section {
     background-color: #36313dcc;
 }
+
+.show-card {
+    background-color: #36313dcc;
+}
+
+.form-button {
+    background-color: #36313dcc;
+    color: #D4AF37;
+    /* #c0c0c0; */
+}
+
+.register-container {
+    background-color: #36313dcc;
+}

@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+{% block title %} Results {% endblock %}
+{% block content%}
+<div class="container mt-5 text-center">
+    <div class="row justify-content-between">
+        {% for i in res %}
+        <div class="card col-md-3 m-1 show-card">
+            <img src={{i['show']['image']['medium']}} class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{i['show']['name']}}</h5>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock%}
