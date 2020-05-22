@@ -1,0 +1,23 @@
+{% extends 'layout.html'%}
+{% block title %} {{show.name}} {% endblock %}
+{% block content %}
+
+<div class="container mt-5 ">
+    <div class="card base-container-bg">
+        <div class="card-body">
+            {{show.summary}}
+        </div>
+    </div>
+</div>
+<div class="container mt-5 ">
+    <h3>Season</h3>
+    {% for s in season %}
+    <div class="card base-container-bg">
+        <div class="card-body">
+            {{s.seson_num}}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock%}

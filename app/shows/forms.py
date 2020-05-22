@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-# from ..models import Show
+from ..models import Show, db
 from wtforms_alchemy import  model_form_factory
 from wtforms import StringField, PasswordField, HiddenField
 from wtforms.validators import InputRequired, Email, Length
@@ -23,7 +23,9 @@ class SearchForm(FlaskForm):
     search = StringField(" ", validators=[InputRequired(), Length(max=30)])
 
 
-# class AddShowForm(FlaskForm):
+class AddShowForm(ModelForm):
+    class Meta: 
+        model = Show
 
 
 
