@@ -40,25 +40,57 @@ def search_results():
     return redirect(url_for('landing'))
 
 
+@shows.route('/submit/<id>')
+def submit(id):
+    if 'username' in session:
+        in_db = Episode.query.filter(Episode.show_id == id).first()
+        print(in_db)
+        if not in_db:
+            ep_list = []
+            show = Show.query.get_or_404(id)
+            season = seasons_search(show.api_id)
+            season_list = [Season(season_num=s['season_num'],
+                                  api_id=s['api_id'], show_id=show.id) for s in season]
+            db.session.add_all(season_list)
+            db.session.commit()
+            eps = [seasons_episodes(s.api_id) for s in season_list]
+            for s_e in eps:
+                for e in s_e:
+                    new_ep = Episode(name=e['name'], season_id=e['season_id'], summary=e['summary'],
+                                     number=e['ep_num'], api_id=e['api_id'], show_id=show.id)
+
+                    ep_list.append(new_ep)
+            db.session.add_all(ep_list)
+            db.session.commit()
+
+            return redirect(url_for('shows.show_detail', id=id))
+        return redirect(url_for('shows.show_detail', id=id))
+    flash('Please login to view this page')
+    return redirect(url_for('landing'))
+
+
 @shows.route('/detail/<id>')
 def show_detail(id):
     if 'username' in session:
-        ep_list = []
         show = Show.query.get_or_404(id)
-        season = seasons_search(show.api_id)
-        season_list = [Season(season_num=s['season_num'],
-                              api_id=s['api_id'], show_id=show.id) for s in season]
-        db.session.add_all(season_list)
-        db.session.commit()
-        eps = [seasons_episodes(s.api_id) for s in season_list]
-        for s_e in eps:
-            for e in s_e:
-                new_ep = Episode(name=e['name'], season_id=e['season_id'], summary=e['summary'],
-                                 number=e['ep_num'], api_id=e['api_id'], show_id=show.id)
-
-                ep_list.append(new_ep)
-        db.session.add_all(ep_list)
-        db.session.commit()
-        return render_template('show_detail.html', show=show, season=season)
+        return render_template('show_detail.html', show=show)
     flash('Please login to view this page')
     return redirect(url_for('landing'))
+
+
+# ep_list = []
+#         show = Show.query.get_or_404(id)
+#         season = seasons_search(show.api_id)
+#         season_list = [Season(season_num=s['season_num'],
+#                               api_id=s['api_id'], show_id=show.id) for s in season]
+#         db.session.add_all(season_list)
+#         db.session.commit()
+#         eps = [seasons_episodes(s.api_id) for s in season_list]
+#         for s_e in eps:
+#             for e in s_e:
+#                 new_ep = Episode(name=e['name'], season_id=e['season_id'], summary=e['summary'],
+#                                  number=e['ep_num'], api_id=e['api_id'], show_id=show.id)
+
+#                 ep_list.append(new_ep)
+#         db.session.add_all(ep_list)
+#         db.session.commit()

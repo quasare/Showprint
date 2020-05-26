@@ -35,14 +35,14 @@ def track_show():
                              summary=form['summary'], url=form['url'], api_id=form['api_id'], img_url=form['img_url'])
             db.session.add(user_show)
             db.session.commit()
-       
-
-        user_watched = Watched_show(
-            user_id=cur_user.username, show_id=user_show.id)
-        db.session.add(user_watched)
-        db.session.commit()
-
-      
+        is_watching = Watched_show.query.filter(
+            cur_user.username == Watched_show.user_id, Watched_show.show_id == user_show.id).all()
+        if not is_watching:
+            user_watched = Watched_show(
+                user_id=cur_user.username, show_id=user_show.id)
+            db.session.add(user_watched)
+            db.session.commit()
+            return redirect(url_for('user.user_dashboard'))
         return redirect(url_for('user.user_dashboard'))
     flash('Please login to view this page')
     return redirect(url_for('landing'))

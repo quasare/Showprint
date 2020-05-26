@@ -9,15 +9,40 @@
         </div>
     </div>
 </div>
-<div class="container mt-5 ">
-    <h3>Season</h3>
-    {% for s in season %}
-    <div class="card base-container-bg">
-        <div class="card-body">
-            {{s.seson_num}}
+<div class="container mt-5 text-center">
+    <h3>Seasons</h3>
+    <div class="row justify-content-left">
+        {% for s in show.seasons %}
+        <div class="card base-container-bg col-md-12">
+            <div class="card-body ">
+                <button class="btn" type="button" data-toggle="collapse" data-target="#season{{s.season_num}}"
+                    aria-expanded="false" aria-controls="{{s.season_num}}">
+                    {{s.season_num}}</button>
+                <!-- <span class="badge  badge-pill">Episodes: </span> -->
+            </div>
         </div>
+        <div class="collapse multi-collapse" id="season{{s.season_num}}">
+            <div class="row">
+                <ul class="list-group list-group-horizontal-md">
+                    {% for e in s.episodes %}
+
+                    <li class="list-group-item">
+                        {{e.name}}
+                        <span><i class="far fa-heart"></i></span>
+                        <span><i class="fas fa-check"></i></span>
+                    </li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+
     </div>
-    {% endfor %}
 </div>
+
+</div>
+
+
 
 {% endblock%}

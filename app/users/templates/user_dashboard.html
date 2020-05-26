@@ -12,7 +12,7 @@
                     {% for s in shows %}
                     <tr>
                         <td>
-                            <a href={{url_for('shows.show_detail', id = s.shows.id)}}>{{s.shows.name}}</a>
+                            <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
                         </td>
                     </tr>
                     {% endfor %}
