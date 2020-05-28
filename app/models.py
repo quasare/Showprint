@@ -75,9 +75,10 @@ class Show(db.Model):
     img_url = db.Column(db.String, info={'widget': widgets.HiddenInput()})
     api_id = db.Column(db.Integer, nullable=False, unique=True,
                        info={'widget': widgets.HiddenInput()})
+    watching = db.Column(db.Boolean, default=False)                   
     episodes = db.relationship('Episode', backref='shows')
     seasons = db.relationship('Season', backref='shows')
-    watched = db.relationship('Watched_show', backref='shows')
+    finished = db.relationship('Watched_show', backref='shows')
 
     def __repr__(self):
         s = self

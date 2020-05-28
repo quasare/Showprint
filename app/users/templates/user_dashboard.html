@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-{% block title %} Your Profile {% endblock %}
+{% block title %} Dashboard {% endblock %}
 {% block content%}
 <div class="container mt-5">
     <div class="row justify-content-between">
@@ -9,21 +9,38 @@
                     <th>Interested Shows</th>
                 </thead>
                 <tbody>
+
                     {% for s in shows %}
+                    {% if not s.shows.watching %}
                     <tr>
                         <td>
                             <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
+                            <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn form-button">Mark
+                                as Wataching</a>
                         </td>
                     </tr>
+                    {% endif %}
                     {% endfor %}
+
                 </tbody>
             </table>
         </div>
         <div class="col-md-6 user-dash-section">
             <table class="text-center">
                 <thead>
-                    <th>Currently Watching Shows</th>
+                    <th>Currently Watching</th>
                 </thead>
+
+                <tbody>
+                    {% for s in shows %}
+                    {% if s.shows.watching %}
+                    <tr>
+                        <td>
+                            <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor%}
 
             </table>
         </div>

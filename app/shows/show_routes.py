@@ -98,19 +98,15 @@ def watched_show():
     flash('Please login to view this page')
     return redirect(url_for('landing'))
 
-# ep_list = []
-#         show = Show.query.get_or_404(id)
-#         season = seasons_search(show.api_id)
-#         season_list = [Season(season_num=s['season_num'],
-#                               api_id=s['api_id'], show_id=show.id) for s in season]
-#         db.session.add_all(season_list)
-#         db.session.commit()
-#         eps = [seasons_episodes(s.api_id) for s in season_list]
-#         for s_e in eps:
-#             for e in s_e:
-#                 new_ep = Episode(name=e['name'], season_id=e['season_id'], summary=e['summary'],
-#                                  number=e['ep_num'], api_id=e['api_id'], show_id=show.id)
 
-#                 ep_list.append(new_ep)
-#         db.session.add_all(ep_list)
-#         db.session.commit()
+@shows.route('/track_show/<id>', methods=['POST', 'GET'])
+def cur_watching_show(id):
+    if 'username' in session:
+        show = Show.query.get_or_404(id)
+        watching = show.watching = True
+
+        
+        db.session.commit()
+        return redirect(url_for('user.user_dashboard'))
+    flash('Please login to view this page')
+    return redirect(url_for('landing'))
