@@ -108,7 +108,7 @@ class Episode(db.Model):
     api_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
-    watched = db.relationship('Watched_episode', backref='episodes')
+    watched = db.relationship('Watched_episode', backref='episodes', uselist=False)
 
     def __repr__(self):
         e = self

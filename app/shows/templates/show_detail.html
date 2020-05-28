@@ -23,13 +23,17 @@
         </div>
         <div class="collapse multi-collapse" id="season{{s.season_num}}">
             <div class="row">
-                <ul class="list-group list-group-horizontal-md">
+
+                <ul class="list-group list-group-horizontal-md ">
                     {% for e in s.episodes %}
 
                     <li class="list-group-item">
                         {{e.name}}
-                        <span><i class="far fa-heart"></i></span>
-                        <span><i class="fas fa-check"></i></span>
+                        {% if e.watched  %}
+                        <i id='{{e.id}} {{session['username']}}' class="fas fa-square"></i>
+                        {% else %}
+                        <i id='{{e.id}} {{session['username']}}' class="far fa-square"></i>
+                        {% endif %}
                     </li>
 
                     {% endfor %}
@@ -46,3 +50,6 @@
 
 
 {% endblock%}
+{% block scripts%}
+<script src="../static/show.js"></script>
+{% endblock %}

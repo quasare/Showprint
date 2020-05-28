@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash
+from flask import Blueprint, render_template, session, redirect, url_for, flash, jsonify, request
 from .forms import SearchForm, AddShowForm
 from show_request import shows_search
-from ..models import db, Search, Show, Season, Episode
+from ..models import db, Search, Show, Season, Episode, Watched_episode
 from show_request import seasons_search, seasons_episodes
 
 shows = Blueprint('shows', __name__, template_folder='templates',
@@ -77,6 +77,26 @@ def show_detail(id):
     flash('Please login to view this page')
     return redirect(url_for('landing'))
 
+
+@shows.route('/watched', methods=['POST'])
+def watched_show():
+    if 'username' in session:
+        watched_ep = request.json['userEp'].split(' ')
+        ep_id, username = watched_ep
+        in_db = Watched_episode.query.filter(
+            Watched_episode.ep_id == ep_id, Watched_episode.user_id == username).first()
+        if not in_db:
+            new_watched_ep = Watched_episode(
+                user_id=username, ep_id=ep_id, finished=True)
+            db.session.add(new_watched_ep)
+            db.session.commit()
+            return jsonify(res='success')
+        elif in_db:
+            db.session.delete(in_db)
+            db.session.commit()
+            return jsonify(res='success')
+    flash('Please login to view this page')
+    return redirect(url_for('landing'))
 
 # ep_list = []
 #         show = Show.query.get_or_404(id)
