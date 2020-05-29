@@ -75,7 +75,7 @@ class Show(db.Model):
     img_url = db.Column(db.String, info={'widget': widgets.HiddenInput()})
     api_id = db.Column(db.Integer, nullable=False, unique=True,
                        info={'widget': widgets.HiddenInput()})
-    watching = db.Column(db.Boolean, default=False)                   
+    watching = db.Column(db.Boolean, default=False)
     episodes = db.relationship('Episode', backref='shows')
     seasons = db.relationship('Season', backref='shows')
     finished = db.relationship('Watched_show', backref='shows')
@@ -109,7 +109,8 @@ class Episode(db.Model):
     api_id = db.Column(db.Integer, nullable=False)
     rating = db.Column(db.Integer)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
-    watched = db.relationship('Watched_episode', backref='episodes', uselist=False)
+    watched = db.relationship(
+        'Watched_episode', backref='episodes', uselist=False)
 
     def __repr__(self):
         e = self
@@ -138,7 +139,6 @@ class Watched_episode(db.Model):
         'episodes.id'), primary_key=True)
     liked = db.Column(db.Boolean, default=False)
     finished = db.Column(db.Boolean, default=False)
-
 
 class Show_queue(db.Model):
 

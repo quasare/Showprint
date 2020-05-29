@@ -10,5 +10,6 @@ payload = {'part': 'snippet', 'q': 'pharrell', 'maxResults': 3, 'key': API_KEY}
 
 res = requests.get(f'{BASE_URL}', params=payload).json()
 
+vid_id = 'tewt'
 
-video url = f"https://www.youtube.com/watch?v={vid_id}"
+video_url = f"https://www.youtube.com/watch?v={vid_id}"

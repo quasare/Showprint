@@ -6,6 +6,7 @@ from .models import db, connect_db, User
 from .shows.show_routes import shows
 from .users.users_routes import user
 from .users.forms import RegisterUserForm, LoginForm
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object('config.DevConfig')
@@ -54,6 +55,8 @@ def login():
         user = User.authenticate(username, password)
 
         if user:
+            user.last_login = datetime.now()
+            db.session.commit()
             session["username"] = user.username  # keep logged in
             return redirect(url_for('landing'))
         else:

@@ -11,7 +11,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
     DEBUG_TB_INTERCEPT_REDIRECTS = False
-    SECRET_KEY = 'SECRET_KEY'
+    SECRET_KEY = 'hTL0kdYHWbduXSAD7q4WgD4-N10vEFleQfO_xQx6-V0'
     SECURITY_PASSWORD_SALT = '156wg1ew651ewgwegwe'
 
 class ProdConfig(Config):
