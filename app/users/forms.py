@@ -1,24 +1,32 @@
 from flask_wtf import FlaskForm
 from ..models import db, User
-from wtforms_alchemy import  model_form_factory
+from wtforms_alchemy import model_form_factory
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, Length
 
 
 BaseModelForm = model_form_factory(FlaskForm)
 
+
 class ModelForm(BaseModelForm):
     @classmethod
     def get_session(self):
         return db.session
 
+
 class RegisterUserForm(ModelForm):
     class Meta:
         include = ['username']
-        model = User       
+        model = User
+
 
 class LoginForm(FlaskForm):
     """Form for registering a user."""
 
     username = StringField("Username", validators=[InputRequired()])
-    password = PasswordField("Password", validators=[InputRequired()])       
+    password = PasswordField("Password", validators=[InputRequired()])
+
+
+class EditUserForm(ModelForm):
+    class Meta:
+        model = User

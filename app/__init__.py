@@ -7,6 +7,7 @@ from .shows.show_routes import shows
 from .users.users_routes import user
 from .users.forms import RegisterUserForm, LoginForm
 from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.config.from_object('config.DevConfig')
@@ -30,18 +31,25 @@ def landing():
 def register():
     form = RegisterUserForm()
     if form.validate_on_submit():
-        username = form.username.data
-        password = form.password.data
-        email = form.email.data
-        first_name = form.first_name.data
-        last_name = form.last_name.data
+        try: 
 
-        registerd = User.register(username, password)
-        user = User(username=username, password=registerd.password, email=email, first_name=first_name, last_name=last_name)
-        db.session.add(user)
-        db.session.commit()
-        session["username"] = user.username
-        return redirect(url_for('landing'))
+            username = form.username.data
+            password = form.password.data
+            email = form.email.data
+            first_name = form.first_name.data
+            last_name = form.last_name.data
+
+            registerd = User.register(username, password)
+            user = User(username=username, password=registerd.password, email=email, first_name=first_name, last_name=last_name)
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            flash("Username already taken", 'danger')
+            return render_template('register.html', form=form)  
+
+            session["username"] = user.username
+            return redirect(url_for('landing'))
+        
     return render_template('register.html', form=form) 
 
 @app.route('/login', methods=['GET', 'POST'])
