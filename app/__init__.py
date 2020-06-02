@@ -1,5 +1,4 @@
 import os
-
 from flask import Flask, render_template, request, flash, redirect, session, g, url_for
 from flask_debugtoolbar import DebugToolbarExtension
 from .models import db, connect_db, User
@@ -25,7 +24,9 @@ app.register_blueprint(user, url_prefix='/user')
 
 @app.route('/')
 def landing():
-    return render_template('layout.html')
+    if 'username' in session:
+        return redirect(url_for(user.user_dashboard))
+    return render_template('landing.html')
 
 
 @app.route('/register', methods=['POST', 'GET'])

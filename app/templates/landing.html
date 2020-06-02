@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% block title %} CineTrail{% endblock %}
+{% block content%}
+<div class="container mt-5 text-center">
+    <h1>CineTrail</h1>
+    <p>Welcome to the site that will help log and keep track of all of your favorite shows</p>
+    <div><a href={{url_for('register')}}>Click here to Regiser</a></div>
+    <div><a href={{url_for('login')}}>Click here to login</a></div>
+</div>
+{% endblock %}

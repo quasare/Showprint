@@ -84,7 +84,8 @@ def submit(id):
 def show_detail(id):
     show = Show.query.get_or_404(id)
     # show.summary = html.escape(show.summary)
-    recap_vids = youtube_search(show.name)
+
+    recap_vids = youtube_search(f'{show.name} preview')
 
     return render_template('show_detail.html', show=show, vid=recap_vids)
 

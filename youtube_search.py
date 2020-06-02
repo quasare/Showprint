@@ -11,12 +11,12 @@ BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 def youtube_search(query):
     vids = []
-    payload = {'part': 'snippet', 'q': query, 'maxResults': 4,
+    payload = {'part': 'snippet', 'q': query, 'maxResults': 4, 'type': 'video',
            'key': API_KEY}
     res = requests.get(f'{BASE_URL}', params=payload).json()
-    for n in range(2, 4):
+    for n in range(1, 4):
         vid_id =res['items'][n]['id']['videoId']
-        vids.append({'vid_url': f"https://www.youtube.com/watch?v={vid_id}",
+        vids.append({'vid_url': f"https://www.youtube.com/embed/{vid_id}",
             'thumb': res['items'][n]['snippet']['thumbnails']['medium']['url']
         })
 

@@ -3,27 +3,29 @@
 {% block content%}
 <div class="container mt-5">
     <div class="row justify-content-between">
-        <div class="col-md-2 user-dash-section">
-            <table>
+        <div class="col-md-2 user-dash-section align-self-baseline">
+            <table class="center-table">
                 <thead>
-                    <th>Interested Shows</th>
+                    <th>Interested Shows
+                        <hr>
+                    </th>
+
                 </thead>
                 <tbody>
                     {% for s in shows %}
                     {% if not s.watching %}
                     <tr>
                         <td>
-                            <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
-                            <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn form-button">Mark
-                                as Wataching</a>
-                            <a href={{url_for('shows.remove_show', id=s.shows.id)}} class="btn form-button">Remove</a>
+                            <a href={{url_for('shows.submit', id = s.shows.id)}} class="text-p">{{s.shows.name}}</a>
+                            <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn dash-icons"><span>
+                                    <i class="fas fa-chevron-right fa-sm"></i>
+                                </span></a>
+                            <a href={{url_for('shows.remove_show', id=s.shows.id)}} class="btn dash-icons"><span>
+                                    <i class="far fa-trash-alt fa-sm"></i>
+                                </span></a>
+                            <hr style="color: silver;">
                         </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td>
-                            <p>No shows found</p>
-                        </td>
+
                     </tr>
                     {% endif %}
                     {% endfor %}
@@ -31,37 +33,45 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6 user-dash-section">
-            <table class="text-center">
+        <div class="col-md-6 user-dash-section justify-content-center align-self-baseline">
+            <table class="center-table">
                 <thead>
-                    <th>Currently Watching</th>
+                    <th>Currently Watching
+                        <hr>
+                    </th>
                 </thead>
 
                 <tbody>
-                    {% for s in shows %}
-                    {% if s.watching %}
-                    <tr>
-                        <td>
-                            <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
-                            <a href={{url_for('shows.remove_watching', id=s.shows.id)}}
-                                class="btn form-button">Remove</a>
-                        </td>
-                    </tr>
-                    {% else %}
+                    {% if shows|length == 0 %}
                     <tr>
                         <td>
                             <p>No shows found</p>
                         </td>
                     </tr>
                     {% endif %}
-                    {% endfor%}
+                    {% for s in shows %}
+                    {% if s.watching %}
+                    <tr>
+                        <td>
+                            <a href={{url_for('shows.submit', id = s.shows.id)}} class="text-p">{{s.shows.name}}</a>
+                            <a href={{url_for('shows.remove_watching', id=s.shows.id)}} class="dash-icons ml-4">
+                                <span><i class="far fa-times-circle "></i> </span></a>
+                            <hr>
+                        </td>
+                    </tr>
 
+                    {% endif %}
+                    {% endfor%}
+                </tbody>
             </table>
         </div>
-        <div class="col-md-2 user-dash-section">
-            <table>
+        <div class="col-md-2 user-dash-section align-self-baseline ">
+            <table class="center-table">
                 <thead>
-                    <th>Top Shows on site</th>
+                    <th>Top Shows on site
+                        <hr>
+                    </th>
+
                 </thead>
             </table>
         </div>

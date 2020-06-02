@@ -4,6 +4,9 @@
 {% block content%}
 <div class="container mt-5 text-center">
     <div class="row justify-content-center">
+        {% if not res %}
+        <h3 class="show-card">Nothing found</h3>
+        {% endif %}
         {% for i in res %}
         <div class="card col-12 m-1 show-card">
             <div class="card-body">

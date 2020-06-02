@@ -57,12 +57,17 @@
     </div>
 </div>
 
-<div class="container mt-5 base-container-bg text-center">
-    <h3>Vids</h3>
-    {% for v in vids %}
-    <p>{{V}}</p>
-    {% endfor %}
+<div class="container mt-5 text-center">
+    <h3 class="show-card">Previews</h3>
+    <div class="row justify-content-around">
+        {% for v in vid %}
+        <iframe class="col-md-6 my-1" src={{v.vid_url}} width="400" height="240" frameborder="0"
+            allowfullscreen></iframe>
+        {% endfor %}
+    </div>
 </div>
+
+
 
 
 
