@@ -6,7 +6,7 @@ $(document).ready(function () {
         ep = e.target.id
         checkBox = e.target.classList[0]
 
-        let res = await axios.post(`${baseURL}/shows/watched`, {
+        let res = await axios.post(`${baseURL}/shows/watch_ep`, {
             userEp: `${ep}`
         })
         if (checkBox === 'far') {

@@ -9,14 +9,20 @@
                     <th>Interested Shows</th>
                 </thead>
                 <tbody>
-
                     {% for s in shows %}
-                    {% if not s.shows.watching %}
+                    {% if not s.watching %}
                     <tr>
                         <td>
                             <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
                             <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn form-button">Mark
                                 as Wataching</a>
+                            <a href={{url_for('shows.remove_show', id=s.shows.id)}} class="btn form-button">Remove</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>
+                            <p>No shows found</p>
                         </td>
                     </tr>
                     {% endif %}
@@ -33,10 +39,18 @@
 
                 <tbody>
                     {% for s in shows %}
-                    {% if s.shows.watching %}
+                    {% if s.watching %}
                     <tr>
                         <td>
                             <a href={{url_for('shows.submit', id = s.shows.id)}}>{{s.shows.name}}</a>
+                            <a href={{url_for('shows.remove_watching', id=s.shows.id)}}
+                                class="btn form-button">Remove</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>
+                            <p>No shows found</p>
                         </td>
                     </tr>
                     {% endif %}

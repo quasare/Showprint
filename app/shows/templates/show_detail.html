@@ -4,8 +4,12 @@
 
 <div class="container mt-5 ">
     <div class="card base-container-bg">
+        <h3 class="text-center">{{show.name}}</h3>
         <div class="card-body">
+            <html>
             {{show.summary}}
+
+            </html>
         </div>
     </div>
 </div>
@@ -15,10 +19,16 @@
         {% for s in show.seasons %}
         <div class="card base-container-bg col-md-12">
             <div class="card-body ">
-                <button class="btn" type="button" data-toggle="collapse" data-target="#season{{s.season_num}}"
-                    aria-expanded="false" aria-controls="{{s.season_num}}">
+                <button class="btn season-btn" type="button" data-toggle="collapse"
+                    data-target="#season{{s.season_num}}" aria-expanded="false" aria-controls="{{s.season_num}}">
                     {{s.season_num}}</button>
-                <!-- <span class="badge  badge-pill">Episodes: </span> -->
+                {% if True  %}
+                <a href={{url_for('shows.watch_season', id=show.id)}}><i id='{{s.id}} {{session['username']}}'
+                        class="fas fa-square"></i></a>
+
+                {% else %}
+                <i id='{{s.id}} {{session['username']}}' class="far fa-square"></i>
+                {% endif %}
             </div>
         </div>
         <div class="collapse multi-collapse" id="season{{s.season_num}}">
@@ -49,6 +59,9 @@
 
 <div class="container mt-5 base-container-bg text-center">
     <h3>Vids</h3>
+    {% for v in vids %}
+    <p>{{V}}</p>
+    {% endfor %}
 </div>
 
 

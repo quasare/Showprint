@@ -40,3 +40,8 @@ body {
     height: 10rem;
     width: 7rem;
 }
+
+.season-btn {
+    color: #D4AF37;
+    background-color: #C0C0C01A;
+}

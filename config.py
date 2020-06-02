@@ -1,5 +1,5 @@
 """ Flask Config """
-from os import environ, path
+from os import environ, path, getenv
 from dotenv import load_dotenv
 
 basedir = path.abspath(path.dirname(__file__))
@@ -13,6 +13,7 @@ class Config:
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SECRET_KEY = 'hTL0kdYHWbduXSAD7q4WgD4-N10vEFleQfO_xQx6-V0'
     SECURITY_PASSWORD_SALT = '156wg1ew651ewgwegwe'
+    API_KEY = getenv('API_KEY')
 
 class ProdConfig(Config):
     FLASK_ENV = 'production'
