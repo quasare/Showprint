@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, flash, jsonify, request
 from .forms import SearchForm, AddShowForm
 from show_request import shows_search
-from ..models import db, Search, Show, Season, Episode, Watched_episode, Watched_show
+from ..models import db, Search, Show, Season, Episode, Watched_episode, Watched_show, Watched_season
 from show_request import seasons_search, seasons_episodes
 from ..helpers import login_required
 from youtube_search import youtube_search
@@ -17,6 +17,20 @@ def mark_ep_watched(ep_id, username):
     if not in_db:
         new_watched_ep = Watched_episode(
             user_id=username, ep_id=ep_id, finished=True)
+        db.session.add(new_watched_ep)
+        db.session.commit()
+    elif in_db:
+        db.session.delete(in_db)
+        db.session.commit()
+    return
+
+
+def toggle_season(s_id, username):
+    in_db = Watched_season.query.filter(
+        Watched_season.season_id == s_id, Watched_season.user_id == username).first()
+    if not in_db:
+        new_watched_ep = Watched_season(
+            user_id=username, season_id=s_id, finished=True)
         db.session.add(new_watched_ep)
         db.session.commit()
     elif in_db:
@@ -134,12 +148,18 @@ def remove_watching(id):
     return redirect(url_for('user.user_dashboard'))
 
 
-@shows.route('/watch_season/<id>', methods=['POST', 'GET'])
+@shows.route('/watch_season', methods=['POST'])
 @login_required
-def watch_season(id):
-    show = Show.query.get_or_404(id)
+def watch_season():
     username = session['username']
-    ep_list = show.seasons[0].episodes
+    watched_s = request.json['season'].split(' ')
+
+    season, id, season_id = watched_s
+    show = Show.query.get_or_404(id)
+    s = (int(season) - 1)
+    ep_list = show.seasons[s].episodes
+    Season_bool = show.seasons[s].watched
+    toggle_season(season_id, username)
     for e in ep_list:
         mark_ep_watched(e.id, username)
     return redirect(url_for('shows.show_detail', id=id))

@@ -93,6 +93,8 @@ class Season(db.Model):
     api_id = db.Column(db.Integer, nullable=False, unique=True)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
     episodes = db.relationship('Episode', backref='seasons')
+    watched = db.relationship(
+        'Watched_season', backref='episodes', uselist=False)
 
 
 class Episode(db.Model):
@@ -128,6 +130,15 @@ class Watched_show(db.Model):
     finished = db.Column(db.Boolean, default=False)
     watching = db.Column(db.Boolean, default=False)
 
+class Watched_season(db.Model):
+
+    __tablename__='watched_season'
+
+    user_id = db.Column(db.String, db.ForeignKey(
+        'users.username'), primary_key=True)
+    season_id = db.Column(db.Integer, db.ForeignKey(
+        'seasons.id'), primary_key=True)
+    finished = db.Column(db.Boolean, nullable=False, default=False)    
 
 class Watched_episode(db.Model):
 
