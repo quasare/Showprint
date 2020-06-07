@@ -17,7 +17,12 @@ def user_dashboard():
     cur_user = User.query.get_or_404(username)
     user_shows_list = Watched_show.query.filter(
         Watched_show.user_id == cur_user.username).all()
-    return render_template('user_dashboard.html', shows=user_shows_list)
+    # top_shows = db.session.query(Watched_show.show_id, Show.name).join(Show, Watched_show.show_id == Show.id).group_by(Watched_show.show_id).all()
+    result = db.engine.execute(
+        "SELECT shows.name,  COUNT( show_id) FROM watched_shows JOIN  shows ON watched_shows.show_id = shows.id  GROUP BY show_id, shows.name ORDER BY COUNT(show_id) DESC LIMIT 5;")
+    names = [row for row in result]
+    print(names)
+    return render_template('user_dashboard.html', shows=user_shows_list, top_shows=names)
 
 
 @user.route('/trackShow', methods=['POST'])
@@ -59,7 +64,6 @@ def edit_profile(username):
     username = session['username']
     curr_user = User.query.get_or_404(username)
     form = EditUserForm(obj=curr_user)
-    # if form.validate_on_submit:
     if form.validate_on_submit():
         if User.authenticate(username, form.password.data):
             curr_user.first_name = form.first_name.data

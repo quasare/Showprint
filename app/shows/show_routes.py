@@ -100,9 +100,9 @@ def show_detail(id):
     show = Show.query.get_or_404(id)
     user_season = Watched_season.query.filter()
     user_ep = Watched_episode.query.filter(Watched_episode.user_id == username).all()
-    # recap_vids = youtube_search(f'{show.name} preview') vid=recap_vids make API handlerer
+    recap_vids = youtube_search(f'{show.name} preview') 
 
-    return render_template('show_detail.html', show=show, )
+    return render_template('show_detail.html', show=show,vid=recap_vids )
 
 
 @shows.route('/watch_ep', methods=['POST'])
