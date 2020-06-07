@@ -94,7 +94,7 @@ class Season(db.Model):
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
     episodes = db.relationship('Episode', backref='seasons')
     watched = db.relationship(
-        'Watched_season', backref='episodes', uselist=False)
+        'Watched_season', backref='episodes')
 
 
 class Episode(db.Model):
@@ -111,7 +111,7 @@ class Episode(db.Model):
     rating = db.Column(db.Integer)
     show_id = db.Column(db.Integer, db.ForeignKey('shows.id'), nullable=False)
     watched = db.relationship(
-        'Watched_episode', backref='episodes', uselist=False)
+        'Watched_episode', backref='episodes')
 
     def __repr__(self):
         e = self

@@ -5,7 +5,7 @@
 <div class="container mt-5 ">
     <div class="card base-container-bg">
         <h3 class="text-center">{{show.name}}</h3>
-        <div class="card-body">
+        <div class="card-body show-detail">
             <html>
             {{show.summary}}
 
@@ -18,12 +18,16 @@
     <div class="row justify-content-left">
         {% for s in show.seasons %}
         <div class="card base-container-bg col-md-12">
-            <div class="card-body season-list">
+            <div class="card-body season-list ">
                 <button class="btn season-btn" type="button" data-toggle="collapse"
                     data-target="#season{{s.season_num}}" aria-expanded="false" aria-controls="{{s.season_num}}">
                     Season {{s.season_num}}</button>
                 <span> Mark season Watched: </span>
-                {% if s.watched  %}
+
+                {% if s.watched%}
+                {% for u in s.watched %}
+                {% if u.user_id == session['username'] %}
+                {% if u.finished %}
                 <span class="my-5" href={{url_for('shows.watch_season', id=show.id)}}><i
                         id='{{s.season_num}} {{show.id}} {{s.id}}' class="fas fa-square"></i></span>
 
@@ -31,6 +35,17 @@
                 <span class="my-5" href={{url_for('shows.watch_season', id=show.id)}}><i
                         id='{{s.season_num}} {{show.id}} {{s.id}}' class="far fa-square"></i></span>
                 {% endif %}
+                {% elif u.user_id != session['username'] and loop.index0 == s.watched|length - 1 %}
+                <span class="my-5" href={{url_for('shows.watch_season', id=show.id)}}><i
+                        id='{{s.season_num}} {{show.id}} {{s.id}}' class="far fa-square"></i></span>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% if not s.watched %}
+                <span class="my-5" href={{url_for('shows.watch_season', id=show.id)}}><i
+                        id='{{s.season_num}} {{show.id}} {{s.id}}' class="far fa-square"></i></span>
+                {% endif %}
+
             </div>
         </div>
         <div class="collapse multi-collapse" id="season{{s.season_num}}">
@@ -42,9 +57,21 @@
 
                         <li class="list-group-item col-md-2 m-1">
                             {{e.name}}
-                            {% if e.watched  %}
+                            {% if e.watched%}
+                            {% for u in e.watched %}
+                            {% if u.user_id == session['username'] %}
+                            {% if u.finished %}
                             <i id='{{e.id}} {{session['username']}}' class="fas fa-square {{s.season_num}}"></i>
+
                             {% else %}
+                            <i id='{{e.id}} {{session['username']}}' class="far fa-square {{s.season_num}}"></i>
+                            {% endif %}
+                            {% elif u.user_id != session['username'] and loop.index0 == e.watched|length - 1 %}
+                            <i id='{{e.id}} {{session['username']}}' class="far fa-square {{s.season_num}}"></i>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% if not e.watched %}
                             <i id='{{e.id}} {{session['username']}}' class="far fa-square {{s.season_num}}"></i>
                             {% endif %}
                         </li>
@@ -75,5 +102,9 @@
 
 {% endblock%}
 {% block scripts%}
+<script>
+    a = $(".show-detail").text()
+    $(".show-detail").html(a)
+</script>
 <script src="../static/show.js"></script>
 {% endblock %}

@@ -16,8 +16,8 @@
                     </div>
                     <div class="col">
                         <h5 class="card-title">{{i['name']}}</h5>
-                        <a href={{i['url']}}>Official Site</a>
-                        <p>{{i['summary']}}</p>
+                        <a href={{i['url']}}> <u>Official Site</u> </a>
+                        <!-- <p class="show-detail-results">{{i['summary']}}</p> -->
                     </div>
                     <form method="POST" action={{url_for('user.track_show')}}>
                         <div class="form-group">
@@ -39,3 +39,10 @@
     </div>
 </div>
 {% endblock%}
+
+<!-- {% block scripts%}
+<script>
+    a = $(".show-detail-results").text().substring(0, 250)
+    $(".show-detail-results").html(a)
+</script>
+{% endblock %} -->
