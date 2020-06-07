@@ -16,13 +16,15 @@
                     {% if not s.watching %}
                     <tr>
                         <td>
-                            <a href={{url_for('shows.submit', id = s.shows.id)}} class="text-p">{{s.shows.name}}</a>
-                            <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn dash-icons"><span>
-                                    <i class="fas fa-chevron-right fa-sm"></i>
-                                </span></a>
+                            <div class="text-center">{{s.shows.name}}</div>
                             <a href={{url_for('shows.remove_show', id=s.shows.id)}} class="btn dash-icons"><span>
                                     <i class="far fa-trash-alt fa-sm"></i>
                                 </span></a>
+                            <a href={{url_for('shows.submit', id = s.shows.id)}} class="text-p">Detail</a>
+                            <a href={{url_for('shows.cur_watching_show', id=s.shows.id)}} class="btn dash-icons"><span>
+                                    <i class="fas fa-chevron-right fa-sm"></i>
+                                </span></a>
+
                             <hr style="color: silver;">
                         </td>
 
