@@ -19,7 +19,7 @@ def user_dashboard():
         Watched_show.user_id == cur_user.username).all()
     # top_shows = db.session.query(Watched_show.show_id, Show.name).join(Show, Watched_show.show_id == Show.id).group_by(Watched_show.show_id).all()
     result = db.engine.execute(
-        "SELECT shows.name,  COUNT( show_id) FROM watched_shows JOIN  shows ON watched_shows.show_id = shows.id  GROUP BY show_id, shows.name ORDER BY COUNT(show_id) DESC LIMIT 5;")
+        "SELECT shows.name,  COUNT( show_id), show_id FROM watched_shows JOIN  shows ON watched_shows.show_id = shows.id  GROUP BY show_id, shows.name ORDER BY COUNT(show_id) DESC LIMIT 5;")
     names = [row for row in result]
     print(names)
     return render_template('user_dashboard.html', shows=user_shows_list, top_shows=names)

@@ -1,10 +1,9 @@
 {% extends 'layout.html' %}
 {% block title %} {{user.first_name}} {{user.last_name}} {% endblock %}
 {% block content%}
-<div class="container mt-5 text-center base-container-bg">
+<div class="container mt-5 text-center">
     <div class="row justify-content-center">
-
-        <div class="col-md-6">
+        <div class="col-md-6  base-container-bg">
             <h5>{{user.first_name}} {{user.last_name}}</h5>
             <h6>User since: {{user.created_at.strftime('%x')}}</h6>
         </div>
@@ -19,14 +18,14 @@
             <hr>
             <div class="row justify-content-center">
                 <div class="col-md-4">
-                    <ul>
+                    <ul style="list-style: none;">
                         <li>Username</li>
                         <li>Name</li>
                         <li>Email</li>
                     </ul>
                 </div>
                 <div class="col-md-4">
-                    <ul>
+                    <ul style="list-style: none;">
                         <li>{{user.username}}</li>
                         <li>{{user.first_name}} {{user.last_name}}</li>
                         <li>{{user.email}}</li>

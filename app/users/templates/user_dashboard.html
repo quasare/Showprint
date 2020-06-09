@@ -78,9 +78,10 @@
                 <tbody>
                     {% for show in top_shows %}
                     <tr>
-                        <td>{{show['name']}}
-                            <hr
-                            >
+                        <td>
+                            <a href={{url_for('shows.submit', id = show['show_id'])}}
+                                class="text-p">{{show['name']}}</a>
+                            <hr>
                         </td>
 
                     </tr>
