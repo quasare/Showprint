@@ -1,9 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for, flash, request
-from flask_security import Security, SQLAlchemyUserDatastore, login_required
 from .forms import EditUserForm
-from ..models import db, User, Show, Watched_show, Episode
-from show_request import seasons_search, seasons_episodes
-from ..helpers import login_required
+from ..models import db, User, Show, Watched_show
+from ..utils.auth_utils import login_required
 
 
 user = Blueprint('user', __name__, template_folder='templates',

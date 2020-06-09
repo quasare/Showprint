@@ -1,44 +1,19 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash, jsonify, request
+from flask import Blueprint, render_template, session,  \
+    redirect, url_for, flash, jsonify, request
 from .forms import SearchForm, AddShowForm
-from show_request import shows_search
-from ..models import db, Search, Show, Season, Episode, Watched_episode, Watched_show, Watched_season
-from show_request import seasons_search, seasons_episodes
-from ..helpers import login_required
-from youtube_search import youtube_search
-import html
+from ..models import db, Search, Show, Season, Episode, \
+    Watched_episode, Watched_show, Watched_season
+from ..utils.auth_utils import login_required
+from ..utils.show_api_utils import seasons_search, seasons_episodes, shows_search
+from ..utils.youtube_utils import youtube_search
+from ..utils.show_utils import toggle_ep, toggle_season
+
 
 shows = Blueprint('shows', __name__, template_folder='templates',
                   static_folder='static')
 
 
-def mark_ep_watched(ep_id, username):
-    in_db = Watched_episode.query.filter(
-        Watched_episode.ep_id == ep_id, Watched_episode.user_id == username).first()
-    if not in_db:
-        new_watched_ep = Watched_episode(
-            user_id=username, ep_id=ep_id, finished=True)
-        db.session.add(new_watched_ep)
-        db.session.commit()
-    elif in_db:
-        db.session.delete(in_db)
-        db.session.commit()
-    return
-
-
-def toggle_season(s_id, username):
-    in_db = Watched_season.query.filter(
-        Watched_season.season_id == s_id, Watched_season.user_id == username).first()
-    if not in_db:
-        new_watched_ep = Watched_season(
-            user_id=username, season_id=s_id, finished=True)
-        db.session.add(new_watched_ep)
-        db.session.commit()
-    elif in_db:
-        db.session.delete(in_db)
-        db.session.commit()
-    return
-
-
+# 
 @shows.route('/', methods=['POST', 'GET'])
 @login_required
 def show_home():
@@ -112,7 +87,7 @@ def watched_ep():
     ep_id, username = watched_ep
     in_db = Watched_episode.query.filter(
         Watched_episode.ep_id == ep_id, Watched_episode.user_id == username).first()
-    mark_ep_watched(ep_id, username)
+    toggle_ep(ep_id, username)
     return jsonify(res='success')
 
 
@@ -162,5 +137,5 @@ def watch_season():
     Season_bool = show.seasons[s].watched
     toggle_season(season_id, username)
     for e in ep_list:
-        mark_ep_watched(e.id, username)
+        toggle_ep(e.id, username)
     return redirect(url_for('shows.show_detail', id=id))
