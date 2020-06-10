@@ -1,6 +1,6 @@
-# CineTrail
+# Showprint
 
-Cinetrail is a web-app where user can search for there favorite shows and track the episodes watched. Site is deployed here: [Cinetrail](https://showprint.herokuapp.com/)
+Showprint is a web-app where user can search for there favorite shows and track the episodes watched. Site is deployed here: [Showprint](https://showprint.herokuapp.com/)
 
 __Features__
 ---
