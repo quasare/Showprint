@@ -16,7 +16,7 @@ class ModelForm(BaseModelForm):
 class SearchForm(FlaskForm):
     """Search Form for API call"""
 
-    search = StringField(" ", validators=[InputRequired(), Length(max=30)])
+    search = StringField(" ", validators=[InputRequired(), Length(max=30)], description='Type show here ...')
 
 class AddShowForm(ModelForm):
     class Meta: 

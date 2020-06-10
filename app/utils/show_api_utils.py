@@ -2,6 +2,8 @@ import requests
 
 BASE_URL = 'http://api.tvmaze.com'
 
+# Search api for show
+
 
 def shows_search(show):
     payload = {'q': f'{show}'}
@@ -10,11 +12,15 @@ def shows_search(show):
     showList = [serialize_show(s) for s in first_nine]
     return showList
 
+# Search api for seasons
+
 
 def seasons_search(show_id):
     r = requests.get(f'{BASE_URL}/shows/{show_id}/seasons').json()
     season_list = [serialize_season(s) for s in r]
     return season_list
+
+# Search api for Episodes
 
 
 def seasons_episodes(season_id):
@@ -23,11 +29,14 @@ def seasons_episodes(season_id):
     return ep_list
 
 
+# **********************************Format API Data**************************
+
+# Format and extract show response data
 def serialize_show(show):
     if show['show']['image']:
         api_url = show['show']['image']['medium']
     else:
-        api_url = 'app/static/imgs/show_placholder.jpg'
+        api_url = 'static/imgs/show_placeholder.jpg'
 
     if show['show']['rating']['average']:
         show_rating = show['show']['rating']['average']
@@ -44,6 +53,8 @@ def serialize_show(show):
     }
     return show_obj
 
+# Format and extract Season data
+
 
 def serialize_season(season):
     season_obj = {
@@ -51,6 +62,8 @@ def serialize_season(season):
         'api_id': season['id'],
     }
     return season_obj
+
+# Format and extract episode data
 
 
 def serialize_ep(ep, id):
@@ -63,17 +76,3 @@ def serialize_ep(ep, id):
         'season_id': id
     }
     return ep_object
-
-
-# def single_show_search(show):
-#     payload = {'q': f'{show}'}
-#     r = requests.get(f'{BASE_URL}/singlesearch/shows', params=payload)
-#     return r.json()
-
-# def episodes_search(show_id):
-#     r = requests.get(f'{BASE_URL}/shows/{show_id}/episodes')
-#     return r.json()
-
-# def episode_search(ep_id):
-#     r = requests.get(f'{BASE_URL}/episodes/{ep_id}')
-#     return r.json()

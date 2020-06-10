@@ -5,10 +5,11 @@ from environs import Env
 env = Env()
 env.read_env()
 
+# Constants
 API_KEY = env('API_KEY')
-
 BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
+# Youtube search and format for site
 def youtube_search(query):
     vids = []
     payload = {'part': 'snippet', 'q': query, 'maxResults': 4, 'type': 'video',

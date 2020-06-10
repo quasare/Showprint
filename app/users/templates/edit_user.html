@@ -2,33 +2,50 @@
 {% from "macros.html" import temp_form with context %}
 {% block title %} Edit Profile{% endblock %}
 {% block content%}
-<div class="container mt-5 text-center register-container">
-    <h3>Edit your profile</h3>
-    <form method="POST" id="user_form">
-        {{ form.hidden_tag() }}
-
-        {% for field in form if field.widget.input_type != 'hidden' and field.name != 'password' %}
-        {% for error in field.errors %}
-        <span class="text-danger">{{ error }}</span>
-        {% endfor %}
-        {{ field(class="form-control") }}
-        {% endfor %}
-
-        <p>To confirm changes, enter your password:</p>
-        {% if form.password.errors %}
-        {% for error in form.password.errors %}
-        <span class="text-danger">
-            {{ error }}
-        </span>
-        {% endfor %}
-
-        {% endif %}
-        {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
-
-        <div class="edit-btn-area">
-            <button class="btn form-button">Confirm Changes</button>
-            <a href={{url_for('user.user_profile', username=session['username'])}} class="btn form-button">Cancel</a>
+<div class="container mt-5 text-left">
+    <div class="row justify-content-center">
+        <div class="col-6 register-container">
+            <h3>Edit your profile</h3>
         </div>
-    </form>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-6 register-container">
+            <form method="POST" id="user_form">
+                {{ form.hidden_tag() }}
+
+                {% for field in form if field.widget.input_type != 'hidden' and field.name != 'password' %}
+                {% for error in field.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                <div class="row">
+                    <div class="col-md-12">
+                        {{ field.label }}
+                        {{ field(class="form-control") }}
+                    </div>
+                </div>
+                {% endfor %}
+                <div class='mt-5 row'>
+                    <div class="col-md-12">
+                        <p>To confirm changes, enter your password:</p>
+                        {% if form.password.errors %}
+                        {% for error in form.password.errors %}
+                        <span class="text-danger">
+                            {{ error }}
+                        </span>
+                        {% endfor %}
+
+                        {% endif %}
+                        {{ form.password(placeholder="Enter your password to confirm", class="form-control") }}
+
+                        <div class="edit-btn-area text-center">
+                            <button class="btn form-button">Confirm Changes</button>
+                            <a href={{url_for('user.user_profile', username=session['username'])}}
+                                class="btn form-button">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 {% endblock%}

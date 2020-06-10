@@ -26,10 +26,14 @@ class User(db.Model):
                       info={'validators': Email()})
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.now)
-    shows = db.relationship('Watched_show',cascade="all,delete", backref='users' )
-    seasons = db.relationship('Watched_season',cascade="all,delete", backref='users' )
-    episodes = db.relationship('Watched_episode',cascade="all,delete", backref='users' )
-    queue = db.relationship('Show_queue',cascade="all,delete", backref='users' )
+    shows = db.relationship(
+        'Watched_show', cascade="all,delete", backref='users')
+    seasons = db.relationship(
+        'Watched_season', cascade="all,delete", backref='users')
+    episodes = db.relationship(
+        'Watched_episode', cascade="all,delete", backref='users')
+    queue = db.relationship(
+        'Show_queue', cascade="all,delete", backref='users')
 
     @classmethod
     def register(cls, username, pwd):
@@ -76,7 +80,8 @@ class Show(db.Model):
     summary = db.Column(db.String, info={'widget': widgets.HiddenInput()})
     url = db.Column(db.String, nullable=False, info={
                     'widget': widgets.HiddenInput()})
-    img_url = db.Column(db.String, info={'widget': widgets.HiddenInput()})
+    img_url = db.Column(db.String, info={
+                        'widget': widgets.HiddenInput()})
     api_id = db.Column(db.Integer, nullable=False, unique=True,
                        info={'widget': widgets.HiddenInput()})
     episodes = db.relationship('Episode', backref='shows')
@@ -134,15 +139,17 @@ class Watched_show(db.Model):
     finished = db.Column(db.Boolean, default=False)
     watching = db.Column(db.Boolean, default=False)
 
+
 class Watched_season(db.Model):
 
-    __tablename__='watched_season'
+    __tablename__ = 'watched_season'
 
     user_id = db.Column(db.String, db.ForeignKey(
         'users.username'), primary_key=True)
     season_id = db.Column(db.Integer, db.ForeignKey(
         'seasons.id'), primary_key=True)
-    finished = db.Column(db.Boolean, nullable=False, default=False)    
+    finished = db.Column(db.Boolean, nullable=False, default=False)
+
 
 class Watched_episode(db.Model):
 

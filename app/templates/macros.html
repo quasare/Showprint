@@ -19,7 +19,7 @@
 if field.widget.input_type != 'hidden' %}
         <p>
             {{ field.label }}
-            {{ field(class_='form-control') }}
+            {{ field(placeholder=field.label.text, class="form-control") }}
             {% for error in field.errors %}
             {{ error }}
             {% endfor %}

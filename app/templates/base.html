@@ -1,0 +1,61 @@
+{% from "macros.html" import nav_link with context %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,500,700i&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css">
+    <link rel="stylesheet" href="../static/style.css">
+    {% block head%}{% endblock %}
+    <title>{% block title%}{% endblock%}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-bg">
+        <div class="container">
+            <div class="navbar-nav">
+                {% if 'username' in session %}
+                {{ nav_link('user.user_dashboard', 'Home')}}
+                <a class="nav-item nav-link nav-color"
+                    href={{ url_for('user.user_profile', username=session['username'])}}>Profile</a>
+                    {% block nav_search %}{% endblock %}
+                {{ nav_link('shows.show_home', 'Tv Shows') }}
+                {{ nav_link('auth.logout', 'Log Out') }}
+                {% elif 'username' not in session%}
+                {{ nav_link('landing', 'Home') }}
+                {{ nav_link('auth.login', 'Login') }}
+                {{ nav_link('auth.register', 'Sign Up') }}
+                {% endif %}
+            </div>
+
+        </div>
+    </nav>
+
+    {% block content%} {% endblock%}
+
+    <div class="container">
+        {% for category, message in get_flashed_messages(with_categories=True) %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>
