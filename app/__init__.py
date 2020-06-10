@@ -35,12 +35,13 @@ def create_app():
         app.register_blueprint(user, url_prefix='/user')
         app.register_blueprint(auth)
 
+        @app.route('/')
+        def landing():
+            if 'username' in session:
+                return redirect(url_for(user.user_dashboard))
+            return render_template('landing.html')
+
+        return app
 
 
 
-
-@app.route('/')
-def landing():
-    if 'username' in session:
-        return redirect(url_for(user.user_dashboard))
-    return render_template('landing.html')
