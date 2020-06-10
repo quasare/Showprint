@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from wtforms_alchemy import ModelForm, model_form_factory
-from wtforms.validators import Email
+from wtforms.validators import Email, Length
 from wtforms import PasswordField, widgets
 from flask_bcrypt import Bcrypt
 
@@ -21,11 +21,15 @@ class User(db.Model):
     last_name = db.Column(db.String(15), nullable=False,
                           info={'label': 'Last Name'})
     password = db.Column(db.String, nullable=False, info={
-                         'form_field_class': PasswordField})
+                         'form_field_class': PasswordField, 'validators': Length(min=6)})
     email = db.Column(db.String, nullable=False, unique=False,
                       info={'validators': Email()})
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
     last_login = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    shows = db.relationship('Watched_show',cascade="all,delete", backref='users' )
+    seasons = db.relationship('Watched_season',cascade="all,delete", backref='users' )
+    episodes = db.relationship('Watched_episode',cascade="all,delete", backref='users' )
+    queue = db.relationship('Show_queue',cascade="all,delete", backref='users' )
 
     @classmethod
     def register(cls, username, pwd):

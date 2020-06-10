@@ -23,8 +23,8 @@ class RegisterUserForm(ModelForm):
 class LoginForm(FlaskForm):
     """Form for registering a user."""
 
-    username = StringField("Username", validators=[InputRequired()])
-    password = PasswordField("Password", validators=[InputRequired()])
+    username = StringField("Username", validators=[InputRequired(), Length(min=3)])
+    password = PasswordField("Password", validators=[InputRequired(), Length(min=6)])
 
 
 class EditUserForm(ModelForm):

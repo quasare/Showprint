@@ -1,10 +1,9 @@
 from flask import Blueprint, render_template, session,  \
-    redirect, url_for, flash, jsonify, request
+    redirect, url_for, jsonify, request
 from .forms import SearchForm, AddShowForm
-from ..models import db, Search, Show, Season, Episode, \
-    Watched_episode, Watched_show, Watched_season
+from ..models import db, Search, Show, Episode
 from ..utils.auth_utils import login_required
-from ..utils.show_api_utils import seasons_search, seasons_episodes, shows_search
+from ..utils.show_api_utils import shows_search
 from ..utils.youtube_utils import youtube_search
 from ..utils.show_utils import toggle_ep, get_episodes,\
     watch_show, delete_show, unwatch_show, handle_season

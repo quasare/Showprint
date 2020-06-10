@@ -60,9 +60,7 @@ a {
     color: #D4AF37;
 }
 
-/* .show-detail-results {
-    width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-} */
+.form-button-delete {
+    background-color: #36313dcc;
+    color: red;
+}

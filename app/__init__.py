@@ -34,7 +34,6 @@ def register():
     form = RegisterUserForm()
     if form.validate_on_submit():
         try:
-
             username = form.username.data
             password = form.password.data
             email = form.email.data

@@ -1,8 +1,7 @@
-from flask import Blueprint, render_template, session,  \
-    redirect, url_for, flash, jsonify, request
-from ..models import db, Search, Show, Season, Episode, \
+from flask import session
+from ..models import db, Show, Season, Episode, \
     Watched_episode, Watched_show, Watched_season
-from .show_api_utils import seasons_search, seasons_episodes, shows_search
+from .show_api_utils import seasons_search, seasons_episodes
 
 
 # **************************** SHOW LOGIC ****************************

@@ -32,7 +32,9 @@
                     </ul>
                 </div>
             </div>
-            <div><a href={{url_for('user.edit_profile', username=session['username'])}} class="btn form-button">Edit</a>
+            <div>
+                <a href={{url_for('user.edit_profile', username=session['username'])}} class="btn form-button">Edit</a>
+                <span class='my-2'> <a href={{url_for('user.delete_profile', username=session['username'])}} class="btn btn-danger">Delete</a></span>
             </div>
         </div>
     </div>
