@@ -1,1 +1,1 @@
-"web: gunicorn cinetrail:create_app()" 
+web: gunicorn cinetrail:create_app() 
