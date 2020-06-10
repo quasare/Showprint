@@ -13,8 +13,6 @@ shows = Blueprint('shows', __name__, template_folder='templates',
                   static_folder='static')
 
 # Route to search TV shows
-
-
 @shows.route('/', methods=['POST', 'GET'])
 @login_required
 def show_home():
@@ -47,8 +45,6 @@ def nav_search():
     return render_template('search_results.html', res=res, form=form)
 
 # Search results
-
-
 @shows.route('/results')
 @login_required
 def search_results():
@@ -58,8 +54,6 @@ def search_results():
     return render_template('search_results.html', res=res, form=form)
 
 # Get Episodes for shows
-
-
 @shows.route('/submit/<id>')
 @login_required
 def submit(id):
@@ -70,8 +64,6 @@ def submit(id):
     return redirect(url_for('shows.show_detail', id=id))
 
 # Render show detail page
-
-
 @shows.route('/detail/<id>')
 @login_required
 def show_detail(id):
@@ -83,8 +75,6 @@ def show_detail(id):
     return render_template('show_detail.html', show=show, vid=recap_vids)
 
 # Route to handle ajax logic to mark Episodes as watched
-
-
 @shows.route('/watch_ep', methods=['POST'])
 @login_required
 def watched_ep():
@@ -96,8 +86,6 @@ def watched_ep():
     return jsonify({"res": 'success'})
 
 # Mark shows a currenlty watching for Current User
-
-
 @shows.route('/watching/<id>', methods=['POST', 'GET'])
 @login_required
 def cur_watching_show(id):
@@ -105,8 +93,6 @@ def cur_watching_show(id):
     return redirect(url_for('user.user_dashboard'))
 
 # Remove show from currently watching and add back to show of interest
-
-
 @shows.route('/remove_watching/<id>')
 @login_required
 def remove_watching(id):
@@ -114,8 +100,6 @@ def remove_watching(id):
     return redirect(url_for('user.user_dashboard'))
 
 #  Delete show from users list of shows
-
-
 @shows.route('/remove/<id>', methods=['POST', 'GET'])
 @login_required
 def remove_show(id):
@@ -123,8 +107,6 @@ def remove_show(id):
     return redirect(url_for('user.user_dashboard'))
 
 # Mark season as watched for AJAX request
-
-
 @shows.route('/watch_season', methods=['POST'])
 @login_required
 def watch_season():

@@ -56,6 +56,7 @@
                     <tr>
                         <td>
                             <a href={{url_for('shows.submit', id = s.shows.id)}} class="text-p">{{s.shows.name}}</a>
+                            <!-- <span> {{s.shows.episodes| length}}</span> -->
                             <a href={{url_for('shows.remove_watching', id=s.shows.id)}} class="dash-icons ml-4">
                                 <span><i class="far fa-times-circle "></i> </span></a>
                             <hr>

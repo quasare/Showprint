@@ -45,3 +45,12 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.nav-search--btn {
+    color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.nav-search--btn:hover {
+    background-color: #D4AF37;
+}

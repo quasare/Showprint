@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block nav_search %}
-<form class="navbar-form navbar-right" action="/shows/nav_search">
-    <span class="btn-group">
-        <input name="q" class="form-control" placeholder="Search For shows" id="search">
-        <button class="btn btn-default">
-            <span class="fa fa-search "></span>
-        </button>
-    </span>
-</form>
+<li class="nav-item ml-3">
+    <form class="navbar-form" action="/shows/nav_search">
+        <div class="input-group">
+            <input name="q" class="form-control" placeholder="Search For shows" id="search"
+                aria-describedby="basic-addon2">
+            <button class="btn btn-outline-secondary nav-search--btn" ><i class="fas fa-search"
+                    id="basic-addon2"></i></button>
+        </div>
+    </form>
+</li>
 {% endblock %}

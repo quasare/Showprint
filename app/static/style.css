@@ -64,3 +64,12 @@ a {
     background-color: #36313dcc;
     color: red;
 }
+
+.nav-search--btn {
+    color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.nav-search--btn:hover {
+    background-color: #D4AF37;
+}

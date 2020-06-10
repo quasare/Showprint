@@ -46,3 +46,11 @@ body {
     background-color: #C0C0C01A;
 }
 
+.nav-search--btn {
+    color: #D4AF37;
+    border-color: #D4AF37;
+}
+
+.nav-search--btn:hover {
+    background-color: #D4AF37;
+}
