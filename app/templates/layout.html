@@ -25,12 +25,12 @@
                 <a class="nav-item nav-link nav-color"
                     href={{ url_for('user.user_profile', username=session['username'])}}>Profile</a>
                 {{ nav_link('shows.show_home', 'Tv Shows') }}
-                {{ nav_link('logout', 'Log Out') }}
+                {{ nav_link('auth.logout', 'Log Out') }}
                 {% elif 'username' not in session%}
                 {{ nav_link('landing', 'Home') }}
                 
-                {{ nav_link('login', 'Login') }}
-                {{ nav_link('register', 'Sign Up') }}
+                {{ nav_link('auth.login', 'Login') }}
+                {{ nav_link('auth.register', 'Sign Up') }}
                 {% endif %}
             </div>
 
