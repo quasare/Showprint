@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.DevConfig')
+    app.config.from_object('config.ProdConfig')
     connect_db(app)
     with app.app_context():
         from .shows.show_routes import shows

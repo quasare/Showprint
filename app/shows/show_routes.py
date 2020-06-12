@@ -71,7 +71,6 @@ def submit(id):
 
 # Render show detail page
 
-
 @shows.route('/detail/<id>')
 @login_required
 def show_detail(id):
