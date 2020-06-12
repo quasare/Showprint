@@ -1,18 +1,20 @@
 from flask import Blueprint, render_template, session,  \
     redirect, url_for, jsonify, request
 from .forms import SearchForm, AddShowForm
-from ..models import db, Search, Show, Episode
+from ..models import db, Search, Show, Episode, Watched_show
 from ..utils.auth_utils import login_required
 from ..utils.show_api_utils import shows_search
 from ..utils.youtube_utils import youtube_search
 from ..utils.show_utils import toggle_ep, get_episodes,\
-    watch_show, delete_show, unwatch_show, handle_season
+    watch_show, delete_show, unwatch_show, handle_season, track_show
 
 
 shows = Blueprint('shows', __name__, template_folder='templates',
                   static_folder='static')
 
 # Route to search TV shows
+
+
 @shows.route('/', methods=['POST', 'GET'])
 @login_required
 def show_home():
@@ -45,6 +47,8 @@ def nav_search():
     return render_template('search_results.html', res=res, form=form)
 
 # Search results
+
+
 @shows.route('/results')
 @login_required
 def search_results():
@@ -54,6 +58,8 @@ def search_results():
     return render_template('search_results.html', res=res, form=form)
 
 # Get Episodes for shows
+
+
 @shows.route('/submit/<id>')
 @login_required
 def submit(id):
@@ -64,17 +70,23 @@ def submit(id):
     return redirect(url_for('shows.show_detail', id=id))
 
 # Render show detail page
+
+
 @shows.route('/detail/<id>')
 @login_required
 def show_detail(id):
     username = session['username']
     show = Show.query.get_or_404(id)
-
+    is_watching = Watched_show.query.filter(
+        Watched_show.user_id == username, Watched_show.show_id == id).first()
+    print(is_watching)
     # Request youtube recap vids
     recap_vids = youtube_search(f'{show.name} preview')
-    return render_template('show_detail.html', show=show, vid=recap_vids)
+    return render_template('show_detail.html', show=show, vid=recap_vids, watching=is_watching)
 
 # Route to handle ajax logic to mark Episodes as watched
+
+
 @shows.route('/watch_ep', methods=['POST'])
 @login_required
 def watched_ep():
@@ -86,6 +98,8 @@ def watched_ep():
     return jsonify({"res": 'success'})
 
 # Mark shows a currenlty watching for Current User
+
+
 @shows.route('/watching/<id>', methods=['POST', 'GET'])
 @login_required
 def cur_watching_show(id):
@@ -93,6 +107,8 @@ def cur_watching_show(id):
     return redirect(url_for('user.user_dashboard'))
 
 # Remove show from currently watching and add back to show of interest
+
+
 @shows.route('/remove_watching/<id>')
 @login_required
 def remove_watching(id):
@@ -100,6 +116,8 @@ def remove_watching(id):
     return redirect(url_for('user.user_dashboard'))
 
 #  Delete show from users list of shows
+
+
 @shows.route('/remove/<id>', methods=['POST', 'GET'])
 @login_required
 def remove_show(id):
@@ -107,6 +125,8 @@ def remove_show(id):
     return redirect(url_for('user.user_dashboard'))
 
 # Mark season as watched for AJAX request
+
+
 @shows.route('/watch_season', methods=['POST'])
 @login_required
 def watch_season():
@@ -114,3 +134,10 @@ def watch_season():
     season, id, season_id = watched_s
     handle_season(season, id, season_id)
     return redirect(url_for('shows.show_detail', id=id))
+
+# Track show from detail page
+@shows.route('/track/<id>')
+@login_required
+def track_show_detail(id):
+    track_show(id)
+    return redirect(url_for('user.user_dashboard')) 

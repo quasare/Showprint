@@ -73,3 +73,5 @@ def delete_profile(username):
     db.session.commit()
     flash("Profile Deleted", "succes")
     return redirect(url_for('logout'))
+
+

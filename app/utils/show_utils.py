@@ -30,6 +30,15 @@ def delete_show(id):
     db.session.delete(show)
     db.session.commit()
 
+#Track from show detail page
+def track_show(id):
+    username = session['username']
+    user_watched = Watched_show(
+            user_id=username, show_id=id)
+    db.session.add(user_watched)
+    db.session.commit()
+    
+
 
 # *************************** SEASON LOGIC ***************************
 

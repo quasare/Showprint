@@ -8,22 +8,10 @@ from .auth.auth_routes import auth
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
-# app = Flask(__name__)
-# app.config.from_object('config.ProdConfig')
-# toolbar = DebugToolbarExtension(app)
-
-# connect_db(app)
-
-# with app.app_context():
-#     db.create_all()
-
-# app.register_blueprint(shows, url_prefix='/shows')
-# app.register_blueprint(user, url_prefix='/user')
-# app.register_blueprint(auth)
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('config.ProdConfig')
+    app.config.from_object('config.DevConfig')
     connect_db(app)
     with app.app_context():
         from .shows.show_routes import shows
