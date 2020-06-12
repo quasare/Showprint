@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, session, redirect,\
      url_for, flash, request
 from ..models import db, User
 from .forms import RegisterUserForm, LoginForm
+from datetime import datetime
+from sqlalchemy.exc import IntegrityError
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 

@@ -9,9 +9,10 @@ from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
 
-def create_app():
+def create_app(env):
     app = Flask(__name__)
-    app.config.from_object('config.ProdConfig')
+    app.config.from_object(f'config.{env}')
+    toolbar = DebugToolbarExtension(app)
     connect_db(app)
     with app.app_context():
         from .shows.show_routes import shows
@@ -30,6 +31,4 @@ def create_app():
             return render_template('landing.html')
 
         return app
-
-
 
