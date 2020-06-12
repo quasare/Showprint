@@ -27,7 +27,7 @@ def create_app(env):
         @app.route('/')
         def landing():
             if 'username' in session:
-                return redirect(url_for(user.user_dashboard))
+                return redirect(url_for('user.user_dashboard'))
             return render_template('landing.html')
 
         return app
