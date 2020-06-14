@@ -8,7 +8,7 @@ from sqlalchemy.exc import IntegrityError
 auth = Blueprint('auth', __name__, template_folder='templates')
 
 
-
+#  Register user route
 @auth.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegisterUserForm()
@@ -34,7 +34,7 @@ def register():
 
     return render_template('register.html', form=form)
 
-
+# Login user route
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -55,7 +55,7 @@ def login():
 
     return render_template('login.html', form=form)
 
-
+# logout route
 @auth.route('/logout')
 def logout():
     session.pop('username')

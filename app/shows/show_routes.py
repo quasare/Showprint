@@ -14,7 +14,6 @@ shows = Blueprint('shows', __name__, template_folder='templates',
 
 # Route to search TV shows
 
-
 @shows.route('/', methods=['POST', 'GET'])
 @login_required
 def show_home():

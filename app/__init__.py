@@ -8,22 +8,29 @@ from .auth.auth_routes import auth
 from datetime import datetime
 from sqlalchemy.exc import IntegrityError
 
+# Initialize App Function
 
 def create_app(env):
     app = Flask(__name__)
     app.config.from_object(f'config.{env}')
+    
     toolbar = DebugToolbarExtension(app)
     connect_db(app)
     with app.app_context():
+
+        # Import blueprint module
         from .shows.show_routes import shows
         from .users.users_routes import user
         from .auth.auth_routes import auth
         db.create_all()
 
+
+        # Register blueprint modules
         app.register_blueprint(shows, url_prefix='/shows')
         app.register_blueprint(user, url_prefix='/user')
         app.register_blueprint(auth)
 
+        # Landing page
         @app.route('/')
         def landing():
             if 'username' in session:
