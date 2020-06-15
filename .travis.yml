@@ -4,9 +4,14 @@ os: linux
 
 python: 3.8
   
+env: 
+  APP_CONFIG = 'config.py'
+  SECRET_KEY = 'FlyrHjRXP1C6QGHaLFgtJA'
 
 install:
   - pip install -r requirements.txt
 
 script:
    python -m unittest 
+
+   
