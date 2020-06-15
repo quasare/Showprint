@@ -4,13 +4,9 @@ os: linux
 
 python: 3.8
   
-dist: xenial
 
 install:
   - pip install -r requirements.txt
-
-virtualenv:
-  system_site_packages: true  
 
 script:
    python -m unittest 
