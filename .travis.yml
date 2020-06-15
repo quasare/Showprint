@@ -7,7 +7,7 @@ python: 3.8
 env: 
   APP_CONFIG = 'config.py'
   SECRET_KEY = 'Fly'
-  API_KEy = 'wefwe'
+  API_KEy = 'wefwefwe'
 
 install:
   - pip install -r requirements.txt
