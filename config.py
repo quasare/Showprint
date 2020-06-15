@@ -19,7 +19,7 @@ class Config:
     SQLALCHEMY_ECHO = False
     DEBUG_TB_INTERCEPT_REDIRECTS = False
     SECRET_KEY = SECRET_KEY
-    API_KEY = environ.get('API_KEY')
+    API_KEY = getenv('API_KEY')
 
 
 class ProdConfig(Config):

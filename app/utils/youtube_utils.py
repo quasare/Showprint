@@ -1,12 +1,12 @@
 import requests
-from os import environ
+import os
 from environs import Env
 
 env = Env()
 env.read_env()
 
 # Constants
-API_KEY = 'wffwefewfwwefwef'
+API_KEY = env('API_KEY')
 BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 # Youtube search and format for site
