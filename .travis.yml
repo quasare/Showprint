@@ -6,7 +6,7 @@ python: 3.8
   
 env: 
   APP_CONFIG = 'config.py'
-  SECRET_KEY = 'FlyrHjRXP1C6QGHaLFgtJA'
+  SECRET_KEY = 'Fly'
 
 install:
   - pip install -r requirements.txt
