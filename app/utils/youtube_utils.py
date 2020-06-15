@@ -1,9 +1,9 @@
 import requests
 import os
-from environs import Env
+# from environs import Env
 
-env = Env()
-env.read_env()
+# env = Env()
+# env.read_env()
 
 # Constants
 API_KEY = env('API_KEY')
