@@ -4,11 +4,6 @@ os: linux
 
 python: 3.8
   
-env: 
-  - APP_CONFIG = 'config.py'
-  - SECRET_KEY = 'Fly'
-  - API_KEY = 'wefwefwewegewgewgew'
-
 install:
   - pip install -r requirements.txt
 
