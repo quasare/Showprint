@@ -6,7 +6,7 @@ env = Env()
 env.read_env()
 
 # Constants
-API_KEY = environ.get('API_KEY')
+API_KEY = 'wffwefewfwwefwef'
 BASE_URL = 'https://www.googleapis.com/youtube/v3/search'
 
 # Youtube search and format for site
