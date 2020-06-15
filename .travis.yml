@@ -1,5 +1,10 @@
 language: python
 
+services: postgresql
+
+before_script:
+  - psql -c 'create database cinetrail-test;' -U postgres
+
 os: linux
 
 python: 3.8
