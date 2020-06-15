@@ -38,4 +38,4 @@ class DevConfig(Config):
 class TestConfig(Config):
     FLASK_ENV = 'production'
     WTF_CSRF_ENABLED = False
-    SQLALCHEMY_DATABASE_URI = 'postgres:///cinetrail-test'   
+    SQLALCHEMY_DATABASE_URI = 'postgres:///cinetrail_test'   
